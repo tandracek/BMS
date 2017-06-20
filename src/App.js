@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './css/font-awesome.css';
 import './css/skeleton.css';
 import './App.css';
@@ -12,6 +11,7 @@ class App extends Component {
         <div className="App-header">
           <Search />
         </div>
+        <div className="App-main" id="main_view"></div>
       </div>
     );
   }

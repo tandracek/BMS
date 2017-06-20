@@ -1,7 +1,3 @@
-.App {
-  text-align: center;
-}
-
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
@@ -10,12 +6,25 @@
 .App-header {
   background-color: #ffff87;
   margin-bottom: 15px;
+  text-align: center;
   /*box-shadow: 10px 5px 5px black; */
   height: 50px;
   padding: 20px;
   color: black;
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-weight: lighter;
+}
+
+.App-main {
+  margin: 0 auto;
+  width: 80%;
+}
+
+
+@media (min-width: 1000px) {
+    .App-main {
+        width: 60%;
+    }
 }
 
 @keyframes App-logo-spin {
