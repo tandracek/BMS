@@ -2,7 +2,16 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import '../css/search.css';
 
-export class Search extends Component {
+const performSearch = function (text) {
+    const results = [
+        { img: 'image1', title: 'Back to the Future', descr: 'Time travel' },
+        { img: 'image2', title: 'Back to the Future Part 2', descr: 'Time travel part 2' }
+    ];
+    //ReactDOM.render(<SearchResults results={results} />, document.getElementById('main_view'));
+    return Promise.resolve(results);
+}
+
+export default class SearchContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -12,9 +21,16 @@ export class Search extends Component {
         }
     }
     handleClick = () => {
-        performSearch();
+        console.log('handling click');
+        const results = [
+            { img: 'image1', title: 'Back to the Future', descr: 'Time travel' },
+            { img: 'image2', title: 'Back to the Future Part 2', descr: 'Time travel part 2' }
+        ];
+        const searchResults = React.createElement(SearchResults, { results: results });
+        ReactDOM.render(searchResults, document.getElementById('main_view'));
     }
     handleOnKeyUp = (e) => {
+        console.log('handling on key up');
         if (this.searchTimeout)
             clearTimeout(this.searchTimeout);
 
@@ -34,85 +50,56 @@ export class Search extends Component {
                 });
             }).catch((err) => {
                 //TODO create better alert system
-                alert('Caught error: ' + err.toString());  
+                alert('Caught error: ' + err.toString());
             });
         }, 1000);
     }
     render() {
-        return (
-            <div id="searchBarContainer">
-                <div className="row">
-                    <input className="ten columns main-search" type="text" placeholder="Search..." onKeyUp={this.handleOnKeyUp} />
-                    <div className="two columns search-button" onClick={this.handleClick}><i className="fa fa-search" aria-hidden="true"></i></div>
-                    {this.state.loading ? (<i className="fa fa-spinner fa-spin fa-2x fa-fw" />) : null }
-                </div>
-                <div className="row">
-                    <ul className="ten columns">
-                        {this.state.resultsVisible ? this.state.results.map((result) => { return <LiveSearchResults key={'live_' + result.img} results={result} /> }) : null}
-                    </ul>
-                </div>
+        return React.createElement(SearchBar, { loading: this.state.loading, resultsVisible: this.state.resultsVisible, results: this.state.results, onKeyUp: this.handleOnKeyUp, onClick: this.handleClick });
+    }
+}
+
+const SearchBar = ({ loading, resultsVisible, results, onKeyUp, onClick }) => {
+    return (
+        <div className="search-bar-container">
+            <input className="search-bar-input" type="text" placeholder="Search..." onKeyUp={onKeyUp} />
+            <div className="search-bar-button" onClick={onClick}><i className="fa fa-search" aria-hidden="true"></i></div>
+            {loading ? (<i className="fa fa-spinner fa-spin fa-2x fa-fw" />) : null}
+            <ul className="search-bar-results">
+                {resultsVisible ? results.map((result) => { return <LiveSearchResults key={'live_' + result.img} result={result} /> }) : null}
+            </ul>
+        </div>
+    );
+}
+
+const LiveSearchResults = ({ result }) => {
+    return (
+        <li className="live-search-result">
+            <div className="live-search-pic">
+                {result.img}
             </div>
-        );
-    }
-}
-
-const performSearch = function (text) {
-    const results = [
-        { img: 'image1', title: 'Back to the Future', descr: 'Time travel' },
-        { img: 'image2', title: 'Back to the Future Part 2', descr: 'Time travel part 2' }
-    ];
-    //ReactDOM.render(<SearchResults results={results} />, document.getElementById('main_view'));
-    return Promise.resolve(results);
-}
-
-export class LiveSearchResults extends Component {
-    constructor(props) {
-        super(props);
-    }
-    render() {
-        return (
-            <li className="live-search-result">
-                <div className="live-search-pic">
-                    {this.props.results.img}
-                </div>
-                <div className="live-search-descr">
-                    {this.props.results.title}
-                </div>
-            </li>
-        )
-    }
-}
-
-// Set a state that holds the data for the search results
-export class SearchResults extends Component {
-    constructor(props) {
-        super(props);
-        const results = props.results || [];
-        this.state = {
-            results: results
-        }
-    }
-    render() {
-        return (
-            <div className="results-container">
-                <ul className="results-list">
-                    {this.state.results.map((result) => {
-                        return <SearchResult result={result} key={'deferred_' + result.img} />
-                    })}
-                </ul>
+            <div className="live-search-descr">
+                {result.title}
             </div>
-        );
-    }
+        </li>
+    )
 }
 
-export class SearchResult extends Component {
-    render() {
+const SearchResults = ({ results }) => {
+    function renderResult({ image, title, descr }) {
         return (
             <li className="result">
                 <img className="result-image" />
-                <h3 className="result-heading">{this.props.result.title}</h3>
-                <p className="result-descr">{this.props.result.descr}</p>
+                <h3 className="result-heading">{title}</h3>
+                <p className="result-descr">{descr}</p>
             </li>
-        )
+        );
     }
+    return (
+        <div className="results-container">
+            <ul className="results-list">
+                {results.map(renderResult)}
+            </ul>
+        </div>
+    );
 }
