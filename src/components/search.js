@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { Link } from 'react-router';
 import '../css/search.css';
 
 const performSearch = function (text) {
@@ -90,8 +91,10 @@ const SearchResults = ({ results }) => {
         return (
             <li className="result">
                 <img className="result-image" />
-                <h3 className="result-heading">{title}</h3>
-                <p className="result-descr">{descr}</p>
+                <Link to="/title/{title}">
+                    <h3 className="result-heading">{title}</h3>
+                    <p className="result-descr">{descr}</p>
+                </Link>
             </li>
         );
     }

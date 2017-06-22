@@ -5,17 +5,6 @@ import './App.css';
 import SearchContainer from './components/search.js';
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      mainView: null
-    }
-  }
-  updateMain = (viewComponent) => {
-    this.setState({
-      mainView: viewComponent
-    });
-  }
   render() {
     return (
       <div className="App">
@@ -23,7 +12,7 @@ class App extends Component {
           <SearchContainer />
         </div>
         <div className="App-main" id="main_view">
-          {this.state.mainView}
+          {this.props.children}
         </div>
       </div>
     );
