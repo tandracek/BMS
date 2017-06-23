@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, withRouter } from 'react-router-dom';
+import ReactLoading from 'react-loading';
 import SearchBarContainer from './components/searchbar.js';
 import HomeContainer from './components/home.js';
 import TitleContainer from './components/title.js';
@@ -26,12 +27,19 @@ const PropsRoute = ({ component, ...rest }) => {
 class App extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      loading: false
+    }
     this.props.history.listen((location, action) => {
-      console.log('route changin');
+      this.setState({
+        loading: true
+      });
     });
   }
   handleFinishLoad = () => {
-    console.log('Finished change');
+    this.setState({
+      loading: false
+    });
   }
   render() {
     return (
@@ -40,6 +48,7 @@ class App extends Component {
           <SearchBarContainer history={this.props.history}/>
         </div>
         <div className="App-main" id="main_view">
+          { this.state.loading ? <ReactLoading /> : null }
           <Switch>
             <PropsRoute exact path='/' component={HomeContainer} onFinishLoad={this.handleFinishLoad} />
             <PropsRoute path='/title/:title' component={TitleContainer} onFinishLoad={this.handleFinishLoad} />
