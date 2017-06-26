@@ -22,6 +22,7 @@ export default class SearchBarContainer extends Component {
         }
     }
     clearBar() {
+        clearTimeout(this.searchTimeout);
         this.setState({
             results: [],
             input: ''
@@ -40,11 +41,10 @@ export default class SearchBarContainer extends Component {
             clearTimeout(this.searchTimeout);
 
         const value = e.target.value;
-        console.log(value);
+        this.setState({
+            input: value
+        });
         if (value.length < 2){
-            this.setState({
-                input: value
-            });
             return;
         }
 
@@ -95,25 +95,4 @@ const LiveSearchResults = ({ result, onClick }) => {
             </div>
         </li>
     )
-}
-
-const SearchResults = ({ results }) => {
-    function renderResult({ image, title, descr }) {
-        return (
-            <li className="result">
-                <img className="result-image" />
-                <Link to="/title/{title}">
-                    <h3 className="result-heading">{title}</h3>
-                    <p className="result-descr">{descr}</p>
-                </Link>
-            </li>
-        );
-    }
-    return (
-        <div className="results-container">
-            <ul className="results-list">
-                {results.map(renderResult)}
-            </ul>
-        </div>
-    );
 }
