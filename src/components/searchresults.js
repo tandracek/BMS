@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Loading from './loading';
 import '../css/searchresults.css';
 
-//TODO built and implement module that actually makes the api call
+//TODO build and implement module that actually makes the api call
 const runSearch = function (value) {
     const results = [
         { img: 'image1', title: 'Back to the Future', descr: 'Time travel' },
@@ -21,7 +21,7 @@ export default class SearchResultsContainer extends Component {
         }
     }
     handleClick = (title) => {
-        console.log('inside ' + title);
+        this.props.onTitleRoute(title);
     }
     performSearch(query) {
         this.setState({

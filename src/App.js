@@ -32,17 +32,23 @@ class App extends Component {
       });
     });*/
   }
+  handleSearchRoute = (search) => {
+    this.props.history.push(`/search?${search}`);
+  }
+  handleTitleRoute = (title) => {
+    this.props.history.push(`/title/${title}`);
+  }
   render() {
     return (
       <div className="App">
         <div className="App-header">
-          <SearchBarContainer history={this.props.history}/>
+          <SearchBarContainer history={this.props.history} onSearchRoute={this.handleSearchRoute} onTitleRoute={this.handleTitleRoute} />
         </div>
         <div className="App-main" id="main_view">
           <Switch>
-            <PropsRoute exact path='/' component={HomeContainer} onFinishLoad={this.handleFinishLoad} />
-            <PropsRoute path='/title/:title' component={TitleContainer} onFinishLoad={this.handleFinishLoad} />
-            <PropsRoute path='/search' component={SearchResultsContainer} onFinishLoad={this.handleFinishLoad} />
+            <PropsRoute exact path='/' component={HomeContainer} />
+            <PropsRoute path='/title/:title' component={TitleContainer} />
+            <PropsRoute path='/search' component={SearchResultsContainer} onTitleRoute={this.handleTitleRoute} />
           </Switch>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../css/searchbar.css';
 
 const performSearch = function (text) {
@@ -30,11 +30,11 @@ export default class SearchBarContainer extends Component {
     }
     handleClick = (e) => {
         this.clearBar();
-        this.props.history.push(`/search?${this.state.input}`);
+        this.props.onSearchRoute(this.state.input);
     }
     handleResultClick = (title) => {
         this.clearBar();
-        this.props.history.push(`/title/${title}`);
+        this.props.onTitleRoute(title);
     }
     handleOnKeyUp = (e) => {
         if (this.searchTimeout)

@@ -21,18 +21,3 @@
         width: 60%;
     }
 }
-
-.loading-overlay {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: #ffff87;
-  opacity: 0.4;
-  overflow: auto;
-}
-
-.loading-icon {
-  top: 25%;
-  margin: 0 auto;
-  margin-top: 25px;
-}
