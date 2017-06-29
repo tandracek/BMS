@@ -29,6 +29,11 @@ const getTitleData = function(title) {
     return Promise.resolve(data);
 }
 
+const PersonTypes = {
+    CAST: 'cast',
+    CREW: 'crew'
+}
+
 export default class TitleContainer extends Component {
     constructor(props) {
         super(props);
@@ -38,6 +43,9 @@ export default class TitleContainer extends Component {
                 crew: []
             }
         }
+    }
+    handleMoreClick = (type) => {
+
     }
     componentDidMount() {
         getTitleData(this.state.title).then((data) => {
@@ -53,11 +61,11 @@ export default class TitleContainer extends Component {
         });
     }
     render() {
-        return React.createElement(Title, { loading: this.state.loading, data: this.state.data });
+        return React.createElement(Title, { loading: this.state.loading, data: this.state.data, onMoreClick: this.handleMoreClick });
     }
 }
 
-const Title = ({ data, loading }) => {
+const Title = ({ data, loading, onMoreClick }) => {
     return (
         <div className="container">
             <Loading isLoading={loading} />
@@ -71,12 +79,12 @@ const Title = ({ data, loading }) => {
             <div className="title-crew">
                 <h5 className="title-crew-heading">Crew</h5>
                 <PersonList persons={data.crew || []} />
-                <button className="title-more">More</button>
+                <button onClick={() => onMoreClick(PersonTypes.CREW)} className="title-more">More</button>
             </div>
             <div className="title-cast">
                 <h5 className="title-cast-heading">Cast</h5>
                 <PersonList persons={data.cast || []} />
-                <button className="title-more">More</button>
+                <button onClick={() => onMoreClick(PersonTypes.CAST)} className="title-more">More</button>
             </div>
         </div>
     )
