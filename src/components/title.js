@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Loading from './loading';
+import PersonList from './personlist';
 import '../css/title.css';
 
 const getTitleData = function(title) {
@@ -10,8 +11,18 @@ const getTitleData = function(title) {
         crew: [
             {
                 name: "Robert Zemeckis",
-                job: "Director",
+                role: "Director",
                 image: "img"
+            }
+        ],
+        cast: [
+            {
+                name: "Michael J. Fox",
+                role: "Marty McFly"
+            },
+            {
+                name: "Christopher Lloyd",
+                role: "Doc Brown"
             }
         ]
     }
@@ -59,27 +70,13 @@ const Title = ({ data, loading }) => {
             </div>
             <div className="title-crew">
                 <h5 className="title-crew-heading">Crew</h5>
-                <PersonList persons={data.crew} />
+                <PersonList persons={data.crew || []} />
+                <button className="title-more">More</button>
             </div>
-        </div>
-    )
-}
-
-const PersonList = ({ persons }) => {
-    return (
-        <div className="row">
-            { persons ? persons.map(p => <Person person={p} />) : null }
-        </div>
-    )
-}
-
-const Person = ({ person }) => {
-    return (
-        <div className="twelve columns title-person">
-            <div className="title-person-image">{ person.image }</div>
-            <div className="title-person-main">
-                <div>{ person.name }</div>
-                <div>{ person.job }</div>
+            <div className="title-cast">
+                <h5 className="title-cast-heading">Cast</h5>
+                <PersonList persons={data.cast || []} />
+                <button className="title-more">More</button>
             </div>
         </div>
     )

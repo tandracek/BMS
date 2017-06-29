@@ -1,0 +1,25 @@
+.personlist-person {
+    height: 60px;
+    padding: 3px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+.personlist-person:hover {
+    background: #eee;
+    cursor: pointer;
+}
+
+.personlist-person-image {
+    width: 8%;
+    height: 90%;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 1px;
+    float: left;
+    margin-right: 4px;
+}
+
+.personlist-person-main {
+    width: 70%;
+    display: inline-block;
+}
