@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import ReactCSSTransitionGroup from 'react-transition-group';
 import Loading from './loading';
 import PersonList from './personlist';
 import '../css/title.css';
 
-const getTitleData = function(title) {
+const getTitleData = function (title) {
     const data = {
         title: "Back to the Future",
         descr: "Outtatime",
@@ -41,7 +42,8 @@ export default class TitleContainer extends Component {
             loading: true,
             data: {
                 crew: []
-            }
+            },
+            page: TitleMain
         }
     }
     handleMoreClick = (type) => {
@@ -61,19 +63,37 @@ export default class TitleContainer extends Component {
         });
     }
     render() {
-        return React.createElement(Title, { loading: this.state.loading, data: this.state.data, onMoreClick: this.handleMoreClick });
+        return React.createElement(Title, { loading: this.state.loading, data: this.state.data, onMoreClick: this.handleMoreClick, page: this.state.page });
     }
 }
 
-const Title = ({ data, loading, onMoreClick }) => {
+const Title = ({ data, loading, onMoreClick, page }) => {
     return (
         <div className="container">
             <Loading isLoading={loading} />
-            <div className="row title-header"> 
-                <div className="three columns title-image">{ data.image }</div>
+            <ReactCSSTransitionGroup>
+                <page onMoreClick={ onMoreClick } data={ data } />
+            </ReactCSSTransitionGroup>
+        </div>
+    )
+}
+
+const TitlePersons = () => {
+    return (
+        <div>
+            Cast or Crew
+        </div>
+    )
+}
+
+const TitleMain = () => {
+    return (
+        <div>
+            <div className="row title-header">
+                <div className="three columns title-image">{data.image}</div>
                 <div className="nine columns">
-                    <h3>{ data.title }</h3>
-                    <div>{ data.descr }</div>
+                    <h3>{data.title}</h3>
+                    <div>{data.descr}</div>
                 </div>
             </div>
             <div className="title-crew">
