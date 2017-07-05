@@ -31,3 +31,21 @@
     display: block;
     line-height: 0;
 }
+
+.title-enter {
+  opacity: 0.01;
+}
+
+.title-enter.title-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.title-leave {
+  opacity: 1;
+}
+
+.title-leave.title-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}

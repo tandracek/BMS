@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import '../css/personlist.css';
 
-export default ({ persons }) => {
+export default ({ persons, limit }) => {
+    let i = 0;
+    if (limit > 0) {
+        persons = persons.slice(0, limit);
+    }
     return (
         <div className="row">
-            { persons.map(p => <Person person={p} />) }
+            { persons.map(p => <Person key={i++} person={p} />) }
         </div>
     )
 }
